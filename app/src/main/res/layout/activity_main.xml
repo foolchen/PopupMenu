@@ -20,6 +20,8 @@
         android:id="@+id/popup_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:pScrimColor="#B2000000"
+        app:pOutsideTouchable="true"
         app:pGravity="left">
 
         <ImageView

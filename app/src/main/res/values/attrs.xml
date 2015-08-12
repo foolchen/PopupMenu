@@ -11,5 +11,6 @@
         <attr name="pWidthWeight" format="float" />
         <attr name="pHeightWeight" format="float" />
         <attr name="pDuration" format="integer" />
+        <attr name="pOutsideTouchable" format="boolean" />
     </declare-styleable>
 </resources>

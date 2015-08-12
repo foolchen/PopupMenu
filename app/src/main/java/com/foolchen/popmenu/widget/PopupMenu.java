@@ -5,6 +5,9 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -33,6 +36,9 @@ public class PopupMenu extends FrameLayout {
     /** 默认动画执行时间 */
     private static final int DEFAULT_DURATION = 200;
 
+    private static final int DEFAULT_SCRIM_COLOR = 0xB2000000;
+    private static final int DEFAULT_TRANSPARENT = 0x00000000;
+
     /** 子View的位置 */
     private int mGravity;
     /** 子View,用于菜单显示 */
@@ -43,7 +49,12 @@ public class PopupMenu extends FrameLayout {
     private boolean onGoing;
     /** 动画执行时间 */
     private int mTransitionDuration = DEFAULT_DURATION;
+    /** 菜单的出现/消失动画 */
     private ValueAnimator mDisplayAnimator, mDismissAnimator;
+    /** 背景色渐变Drawable */
+    private TransitionDrawable mTransitionDrawable;
+    /** 点击菜单外部区域的{@link android.view.View.OnClickListener} */
+    private OnClickListener mOutsideClickListener;
 
     public PopupMenu(Context context) {
         super(context);
@@ -82,6 +93,16 @@ public class PopupMenu extends FrameLayout {
             final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PopupMenu);
             mGravity = ta.getInt(R.styleable.PopupMenu_pGravity, LEFT);
             mTransitionDuration = ta.getInt(R.styleable.PopupMenu_pDuration, DEFAULT_DURATION);
+            final int scrimColor = ta.getColor(R.styleable.PopupMenu_pScrimColor, DEFAULT_SCRIM_COLOR);
+            Drawable[] drawables = {new ColorDrawable(DEFAULT_TRANSPARENT), new ColorDrawable(scrimColor)};
+            mTransitionDrawable = new TransitionDrawable(drawables);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                setBackground(mTransitionDrawable);
+            } else {
+                setBackgroundDrawable(mTransitionDrawable);
+            }
+            final boolean outsideTouchable = ta.getBoolean(R.styleable.PopupMenu_pOutsideTouchable, true);
+            setOutsideTouchable(outsideTouchable);
             ta.recycle();
         }
     }
@@ -181,6 +202,7 @@ public class PopupMenu extends FrameLayout {
             public void onAnimationEnd(Animator animation) {
                 isChildDisplaying = true;
                 onGoing = false;
+                setOnClickListener(mOutsideClickListener);
             }
 
             @Override
@@ -195,6 +217,7 @@ public class PopupMenu extends FrameLayout {
         });
         mDisplayAnimator.setDuration(mTransitionDuration);
         mDisplayAnimator.start();
+        mTransitionDrawable.startTransition(mTransitionDuration);
     }
 
     public void dismiss() {
@@ -255,6 +278,7 @@ public class PopupMenu extends FrameLayout {
             public void onAnimationEnd(Animator animation) {
                 isChildDisplaying = false;
                 onGoing = false;
+                setOnClickListener(null);
             }
 
             @Override
@@ -269,6 +293,7 @@ public class PopupMenu extends FrameLayout {
         });
         mDismissAnimator.setDuration(mTransitionDuration);
         mDismissAnimator.start();
+        mTransitionDrawable.reverseTransition(mTransitionDuration);
     }
 
     @Override
@@ -297,6 +322,7 @@ public class PopupMenu extends FrameLayout {
     public void reset() {
         mChild.setTranslationX(0);
         mChild.setTranslationY(0);
+        mTransitionDrawable.resetTransition();
         requestLayout();
         isChildDisplaying = false;
         onGoing = false;
@@ -304,5 +330,20 @@ public class PopupMenu extends FrameLayout {
 
     public int getGravity() {
         return mGravity;
+    }
+
+    public void setOutsideTouchable(boolean touchable) {
+        if (touchable) {
+            mOutsideClickListener = new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isChildDisplaying) {
+                        dismiss();
+                    }
+                }
+            };
+        } else {
+            mOutsideClickListener = null;
+        }
     }
 }
