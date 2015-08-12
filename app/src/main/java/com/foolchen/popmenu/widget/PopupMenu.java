@@ -71,6 +71,7 @@ public class PopupMenu extends FrameLayout {
         init(context, attrs);
     }
 
+    @SuppressWarnings("unused")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public PopupMenu(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -99,6 +100,7 @@ public class PopupMenu extends FrameLayout {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 setBackground(mTransitionDrawable);
             } else {
+                //noinspection deprecation
                 setBackgroundDrawable(mTransitionDrawable);
             }
             final boolean outsideTouchable = ta.getBoolean(R.styleable.PopupMenu_pOutsideTouchable, true);
@@ -132,10 +134,10 @@ public class PopupMenu extends FrameLayout {
                 mChild.layout(0, -childHeight, childWidth, 0);
                 break;
             case RIGHT:
-                mChild.layout(right - left, 0, right + childWidth, childHeight);
+                mChild.layout(right - left, 0, right - left + childWidth, childHeight);
                 break;
             case BOTTOM:
-                mChild.layout(0, bottom - top, right, bottom + childHeight);
+                mChild.layout(0, bottom - top, right, bottom - top + childHeight);
                 break;
         }
         if (BuildConfig.DEBUG) {
