@@ -22,7 +22,9 @@
         android:layout_height="match_parent"
         app:pScrimColor="#B2000000"
         app:pOutsideTouchable="true"
-        app:pGravity="bottom">
+        app:pVerticalWeight="0.8"
+        app:pHorizontalWeight="0.8"
+        app:pGravity="top">
 
         <ImageView
             android:layout_width="match_parent"

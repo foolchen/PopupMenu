@@ -8,8 +8,8 @@
             <enum name="bottom" value="3" />
         </attr>
         <attr name="pScrimColor" format="color" />
-        <attr name="pWidthWeight" format="float" />
-        <attr name="pHeightWeight" format="float" />
+        <attr name="pHorizontalWeight" format="float" />
+        <attr name="pVerticalWeight" format="float" />
         <attr name="pDuration" format="integer" />
         <attr name="pOutsideTouchable" format="boolean" />
     </declare-styleable>

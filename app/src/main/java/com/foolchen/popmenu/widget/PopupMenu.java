@@ -12,6 +12,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import com.foolchen.popmenu.BuildConfig;
 import com.foolchen.popmenu.R;
@@ -55,6 +56,8 @@ public class PopupMenu extends FrameLayout {
     private TransitionDrawable mTransitionDrawable;
     /** 点击菜单外部区域的{@link android.view.View.OnClickListener} */
     private OnClickListener mOutsideClickListener;
+    private float mHorizontalWeight;
+    private float mVerticalWeight;
 
     public PopupMenu(Context context) {
         super(context);
@@ -105,6 +108,8 @@ public class PopupMenu extends FrameLayout {
             }
             final boolean outsideTouchable = ta.getBoolean(R.styleable.PopupMenu_pOutsideTouchable, true);
             setOutsideTouchable(outsideTouchable);
+            mHorizontalWeight = ta.getFloat(R.styleable.PopupMenu_pHorizontalWeight, 1f);
+            mVerticalWeight = ta.getFloat(R.styleable.PopupMenu_pVerticalWeight, 1f);
             ta.recycle();
         }
     }
@@ -112,6 +117,16 @@ public class PopupMenu extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        final int parentWidth = getMeasuredWidth();
+        final int parentHeight = getMeasuredHeight();
+        int width = (int) (parentWidth * mHorizontalWeight);
+        int height = (int) (parentHeight * mVerticalWeight);
+        final ViewGroup.LayoutParams layoutParams = mChild.getLayoutParams();
+        layoutParams.width = width;
+        layoutParams.height = height;
+        mChild.setLayoutParams(layoutParams);
+
         measureChildWithMargins(mChild, widthMeasureSpec, 0, heightMeasureSpec, 0);
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "子View的宽度:" + mChild.getMeasuredWidth() + ",height:" + mChild.getMeasuredHeight());
