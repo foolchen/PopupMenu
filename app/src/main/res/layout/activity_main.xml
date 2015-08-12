@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:text="开始"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.foolchen.popmenu.widget.PopupMenu
+        android:id="@+id/popup_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:pGravity="left">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@mipmap/ic_launcher"
+            android:background="#000000" />
+    </com.foolchen.popmenu.widget.PopupMenu>
+
+</LinearLayout>

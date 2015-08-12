@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:context=".MainActivity">
+    <item
+        android:id="@+id/action_left"
+        android:title="左侧"
+        android:checkable="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_top"
+        android:title="顶部"
+        android:checkable="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_right"
+        android:title="右侧"
+        android:checkable="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_bottom"
+        android:title="底部"
+        android:checkable="true"
+        app:showAsAction="never" />
+</menu>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PopupMenu">
+        <attr name="pGravity" format="enum">
+            <enum name="left" value="0" />
+            <enum name="top" value="1" />
+            <enum name="right" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+        <attr name="pScrimColor" format="color" />
+        <attr name="pWidthWeight" format="float" />
+        <attr name="pHeightWeight" format="float" />
+        <attr name="pDuration" format="integer" />
+    </declare-styleable>
+</resources>
