@@ -1,6 +1,7 @@
 package com.foolchen.popmenu;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,5 +65,15 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.action_right).setChecked(gravity == PopupMenu.RIGHT);
         menu.findItem(R.id.action_bottom).setChecked(gravity == PopupMenu.BOTTOM);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void imageClick(View view) {
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.snackbar_layout), "图片被点击了", Snackbar.LENGTH_LONG).setAction("关闭", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        snackbar.show();
     }
 }
